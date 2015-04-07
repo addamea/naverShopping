@@ -2,15 +2,12 @@
 <MOML version="1.1.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.applusform.com/xsd/moml_ui_1.1.8.xsd">
 
 	<UILAYOUT portrait="320,480" landscape="320,480">
-		<WINDOW layout="0,0,320,480" img="white" align="linear:vertical" padding="5,20,10,0">
-			<LABEL text="공연 전시장 정보 검색 : "/>
-			<WINDOW align="linear:subCenter">
-				<LABEL text="검색어 : " />
-				<EDIT id="search" layout="135,30" title="시도" dataSource="sidos.xml" dataList="//item" textPath="text()" valuePath="text()" />
+		<WINDOW layout="0,0,320,480" img="white" align="linear:vertical">
+			<WINDOW layout="320,30" align="linear:subCenter">
+				<EDIT id="search" layout="235,30" placeHolder="검색어를 입력하세요."/>
 				<BUTTON layout="60,30" text="검색" onClick="function.search" />
 			</WINDOW>
-			<AGATEWEBVIEW id="searchResult" control="none"/>
-			<LABEL text="자료제공 : (재)한국문화정보센터" />
+			<AGATEWEBVIEW id="searchResult" control="false"/>
 		</WINDOW>
 	</UILAYOUT>
 
