@@ -7,12 +7,17 @@
 				<EDIT id="search" layout="235,50" placeHolder="검색어를 입력하세요."/>
 				<BUTTON layout="60,50" text="검색" onClick="function.search" />
 			</WINDOW>
-			<AGATEWEBVIEW layout="320,430" id="searchResult" control="false"/>
+			<AGATEWEBVIEW layout="320,430" id="searchResult" controls="false">
+				<LINKMAP>
+	                <LINK url="*" jsPlugin="modifyPage.js"/>
+					<!-- <LINK url="*" onFinish="function.updateToolbar"/> -->
+				</LINKMAP>
+			</AGATEWEBVIEW>
 		</WINDOW>
 	</UILAYOUT>
 
 	<FUNCTION id="search">
-		<CMD cmd="url = 'http://m.shopping.naver.com/search/all_search.nhn?query='+string.encode(search.text, 'percent')+'&amp;frm=NVSHSRC&amp;cat_id=&amp;sb=true'"/>
+		<CMD cmd="url = 'http://m.shopping.naver.com/search/all_search.nhn?query='+string.encode(search.text, 'percent')"/>
 		<CMD cmd="searchResult.src = url"/>
 		<CMD cmd="device.log(url)"/> 
 	</FUNCTION>

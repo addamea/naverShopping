@@ -1,0 +1,51 @@
+function hideElementById(id)
+{
+	var element = document.getElementById(id);
+	if (element)
+  		element.style.display='none';
+}
+
+function hideElementByTag(tag)
+{
+  	var tags=document.getElementsByTagName(tag);
+  	
+	for (i = 0; i < tags.length; ++i) {
+  		var element = tags[i];
+  		element.style.display='none';
+  	}		
+}
+
+function hideElementByClass(className)
+{
+  	var tags=document.getElementsByClassName(className);
+  	
+	for (i = 0; i < tags.length; ++i) {
+  		var element = tags[i];
+  		element.style.display='none';
+  	}		
+}
+
+function css(selector, property, value) {
+    for (var i=0; i < document.styleSheets.length; ++i) {
+        try {
+          document.styleSheets[i].insertRule(selector+ ' {'+property+':'+value+'}', document.styleSheets[i].cssRules.length);
+        } catch(err) {
+        }
+    }
+}
+
+function changeMarginTopById(id, value) {
+  var element = document.getElementById(id);
+  element.style.marginTop = value;
+}
+
+hideElementById('common_header');
+hideElementByClass('sr_opt_depth');
+hideElementByClass('paging_guide');
+hideElementById('_filterTabTitleWrapper');
+hideElementById('_banners');
+hideElementById('_power_link');
+hideElementById('_popularKeywordPart');
+hideElementByClass('notice_area');
+hideElementByClass('paging_guide');
+hideElementById('common_footer');
