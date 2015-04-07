@@ -3,11 +3,11 @@
 
 	<UILAYOUT portrait="320,480" landscape="320,480">
 		<WINDOW layout="0,0,320,480" img="white" align="linear:vertical">
-			<WINDOW layout="320,30" align="linear:subCenter">
-				<EDIT id="search" layout="235,30" placeHolder="검색어를 입력하세요."/>
-				<BUTTON layout="60,30" text="검색" onClick="function.search" />
+			<WINDOW layout="320,50" align="linear:subCenter">
+				<EDIT id="search" layout="235,50" placeHolder="검색어를 입력하세요."/>
+				<BUTTON layout="60,50" text="검색" onClick="function.search" />
 			</WINDOW>
-			<AGATEWEBVIEW id="searchResult" control="false"/>
+			<AGATEWEBVIEW layout="320,430" id="searchResult" control="false"/>
 		</WINDOW>
 	</UILAYOUT>
 
