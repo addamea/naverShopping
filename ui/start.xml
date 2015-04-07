@@ -1,140 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MOML version="1.1.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.applusform.com/xsd/moml_ui_1.1.8.xsd">
-	<THEMES>
-		<THEME element="BUTTON" textColor="#ffffff" defaultImg="#0080ff" pressedImg="#008000" />
-	</THEMES>
 
 	<UILAYOUT portrait="320,480" landscape="320,480">
 		<WINDOW layout="0,0,320,480" img="white" align="linear:vertical" padding="5,20,10,0">
 			<LABEL text="공연 전시장 정보 검색 : "/>
 			<WINDOW align="linear:subCenter">
-				<LABEL text="지역 : " />
-				<SPINNER id="sido" layout="135,30" title="시도" dataSource="sidos.xml" dataList="//item" textPath="text()" valuePath="text()" />
+				<LABEL text="검색어 : " />
+				<EDIT id="search" layout="135,30" title="시도" dataSource="sidos.xml" dataList="//item" textPath="text()" valuePath="text()" />
 				<BUTTON layout="60,30" text="검색" onClick="function.search" />
 			</WINDOW>
-			<LIST2 id="showList" layout="310,380" dataList="//perforList" img="#e1f5fe">
-				<LISTLAYOUT>
-					<BUTTON layout="0,0,320,60" img="transparent" pressedImg="#80a0ff" onClick="function.showDetailView">
-						<WINDOW layout="2,2,56,56" defaultImg="{string.encode(xpath.evaluate('thumbnail/text()'), 'url')}" />
-						<LABEL id="title" layout="60,5,220,15" text="{xpath.evaluate('title/text()')}" textAlign="vCenter" fontSize="12" minFontSize="-1"/>
-						<LABEL id="realm" layout="280,5,20,10" text="{xpath.evaluate('realmName/text()')}" textAlign="right|top" fontSize="9" minFontSize="-1"/>
-						<LABEL id="dates" layout="65,25,100,10" text="{function.toDate(xpath.evaluate('startDate/text()'))} ~ {function.toDate(xpath.evaluate('endDate/text()'))}" textAlign="vCenter" fontSize="10" />
-						<LABEL id="addr" layout="65,40,235,10" text="{xpath.evaluate('place/text()')}" textAlign="vCenter" fontSize="10" />
-					</BUTTON>
-				</LISTLAYOUT>
-			</LIST2>
+			<AGATEWEBVIEW id="searchResult" control="none"/>
 			<LABEL text="자료제공 : (재)한국문화정보센터" />
-		</WINDOW>
-		
-		<WINDOW id="detailView" layout="0,0,320,480" visible="invisible" img="white" onClick="ignore">
-			<LABEL id="detailTitle" layout="0,0,320,30" textAlign="center" fontSize="15" defaultImg="#e0e0ff"/>
-			<WINDOW id="detailOverview" layout="0,40,320,400" align="linear:vertical" scroll="vertical" padding="20">
-				<WINDOW align="linear:center" layout="280,auto">
-					<IMAGE id="detailImg" layout="200,auto"/>
-				</WINDOW>
-				<LABEL id="detailDates" layout="280,30" textAlign="center" />
-				<LABEL id="detailPrice" layout="280,auto" multiLine="true" />
-				<WINDOW align="linear" margin="0,10,0,0">
-					<LABEL text="홈페이지: " />
-					<LABEL id="detailUrl" layout="280-prev.width,auto" onClick="appLauncher.openUri(caller.text, '')" textColor="#0080ff" fontStyle="underline" ellipsis="end" minFontSize="-1"/>
-				</WINDOW>
-				<WINDOW align="linear" margin="0,10,0,0">
-					<LABEL text="전화: " />
-					<LABEL id="detailPhone" onClick="appLauncher.openUri('tel:' + caller.text, '')" textColor="#0080ff" fontStyle="underline"/>
-				</WINDOW>
-				<LABEL text="장소: " margin="0,10,0,0"/>
-				<WINDOW padding="20,0,0,0">
-					<LABEL id="detailPlace" layout="270,20" />
-					<LABEL id="detailPlaceAddr" layout="270,auto" multiLine="true"/>
-					<LABEL id="detailPlaceUrl" layout="270,20" onClick="appLauncher.openUri(caller.text, '')" textColor="#0080ff" fontStyle="underline" ellipsis="end" minFontSize="-1"/>
-				</WINDOW>
-			</WINDOW>
-			<WEBVIEW id="detailContent" layout="10,40,300,400" controls="none" visible="invisible" supportZoom="true"/>
-			<WEBVIEW id="detailMapView" layout="10,40,300,400" controls="none" visible="invisible"/>
-			<WINDOW align="linear:hJustify" layout="0,445,320,30" padding="20,0,20,0" >
-				<BUTTON layout="50,30" text="개요" onClick="detailOverview.visible=true; detailContent.visible=false; detailMapView.visible=false;" />
-				<BUTTON layout="50,30" text="내용" onClick="detailOverview.visible=false; detailContent.visible=true; detailMapView.visible=false;" />
-				<BUTTON layout="50,30" text="지도" onClick="detailOverview.visible=false; detailContent.visible=false; detailMapView.visible=true;" />
-				<BUTTON layout="50,30" text="닫기" onClick="detailOverview.visible=true; detailContent.visible=false; detailMapView.visible=false; detailView.visible=false" />
-			</WINDOW>
 		</WINDOW>
 	</UILAYOUT>
 
-	<!-- https://www.data.go.kr 에서 오픈API - 국문 관광정보 서비스의 [SERVICE KEY]를 발급 받아야 합니다. -->
-	<!-- 다른 사람의 키를 사용할 경우 트래픽을 초과하거나 변경되면 동작하지 않게됩니다.-->
-	<CMD cmd="userVariable.serviceKey = 'XAQRkAc4BBj5RWTWfdEX5Oc5ry0o4j74tmxD5R4HhJoegNLrNTlRZl6%2BCW%2BX%2BC28DAwBYq73UvcNcdB6n591bg%3D%3D'" />
-
-	<FUNCTION id="checkResultCode(xml)">
-		<RETURN condition="xpath.evaluateEx(xml, '//SuccessYN/text()') == 'Y'" cmd="true" />
-		<CMD cmd="errMsg = xpath.evaluateEx(xml, '//errMsg/text()')"/>
-		<CMD cmd="device.systemPopup(errMsg)" />
-		<RETURN cmd="false"/>
-	</FUNCTION>
-
 	<FUNCTION id="search">
-		<CMD cmd="url = 'http://www.culture.go.kr/openapi/rest/publicperformancedisplays/area?ServiceKey=' + userVariable.serviceKey + '&amp;cPage=1&amp;rows=999'"/>
-		<CMD cmd="url = url + '&amp;sido=' + string.encode(sido.text, 'percent')" />
-		<CMD cmd="device.log(url)"/>
-		<CMD cmd="xml = file.read(url)" />
-		<CMD cmd="device.log(xml)"/> 
-		<CMD condition="function.checkResultCode(xml)" cmd="showList.dataSource = xml" />
-	</FUNCTION>
-
-	<FUNCTION id="toDate(str)">
-		<RETURN cmd="string.format('%04d.%02d.%02d', string.sub(str, 0, 4), string.sub(str, 4, 2), string.sub(str, 6, 2))" />
-	</FUNCTION>
-
-	<FUNCTION id="showMap">
-		<CMD cmd="html = file.read('map.htm')" />
-		<CMD cmd="html = string.replace(html, '$LONGITUDE$', xpath.evaluate('gpsX/text()'))"/>
-		<CMD cmd="html = string.replace(html, '$LATITUDE$', xpath.evaluate('gpsY/text()'))"/>
-		<CMD cmd="html = string.replace(html, '$ADDRESS$', xpath.evaluate('place/text()'))"/>
-		<CMD cmd="mapTitle.text = xpath.evaluate('title/text()')" />
-		<CMD cmd="mapWebView.src = html" delay="1000"/>
-		<CMD cmd="detailMap.visible = true" />
-	</FUNCTION>
-
-	<FUNCTION id="showDetailView">
-		<CMD cmd="userVariable.seq = xpath.evaluate('seq/text()')" />
-		<CMD cmd="url = 'http://www.culture.go.kr/openapi/rest/publicperformancedisplays/d/?ServiceKey=' + userVariable.serviceKey"/>
-		<CMD cmd="url = url + '&amp;seq=' + userVariable.seq" />
-		<CMD cmd="xml = file.read(url)" />
-		<!-- 개요 -->
-		<CMD cmd="detailTitle.text = xpath.evaluateEx(xml, '//title/text()')" />
-		<CMD cmd="detailImg.defaultImg = string.encode(xpath.evaluateEx(xml, '//imgUrl/text()'), 'url')" />
-		<CMD cmd="detailDates.text = function.toDate(xpath.evaluate('startDate/text()')) + ' ~ ' + function.toDate(xpath.evaluate('endDate/text()'))" />
-		<CMD cmd="detailPrice.text = xpath.evaluateEx(xml,'//price/text()')" />
-		<CMD cmd="detailUrl.text = xpath.evaluateEx(xml,'//url/text()')" />
-		<CMD cmd="detailPhone.text = xpath.evaluateEx(xml,'//phone/text()')" />
-		<CMD cmd="detailPlace.text = xpath.evaluateEx(xml,'//place/text()')" />
-		<CMD cmd="detailPlaceAddr.text = xpath.evaluateEx(xml,'//placeAddr/text()')" />
-		<CMD cmd="detailPlaceUrl.text = xpath.evaluateEx(xml,'//placeUrl/text()')" />
-		<!-- 내용 웹뷰-->
-		<CMD cmd="html = file.read('contents.htm')" />
-		<CMD cmd="contents1 = xpath.evaluateEx(xml,'//contents1/text()')" />
-		<CMD cmd="contents2 = xpath.evaluateEx(xml,'//contents2/text()')" />
-		<CMD cmd="contents1 = string.replace(contents1, 'src=&quot;/', 'src=&quot;http://www.culture.go.kr/')" />
-		<CMD cmd="contents2 = string.replace(contents2, 'src=&quot;/', 'src=&quot;http://www.culture.go.kr/')" />
-		<CMD cmd="contents1 = string.replace(contents1, 'style=', '_style=')" />
-		<CMD cmd="contents2 = string.replace(contents2, 'style=', '_style=')" />
-		<CMD cmd="html = string.replace(html, '$CONTENTS1$', contents1)" />
-		<CMD cmd="html = string.replace(html, '$CONTENTS2$', contents2)" />
-		<CMD cmd="detailContent.src = html" />
-		<!-- 지도 웹뷰-->
-		<CMD cmd="html = file.read('map.htm')" />
-		<CMD cmd="html = string.replace(html, '$LONGITUDE$', xpath.evaluate('gpsX/text()'))"/>
-		<CMD cmd="html = string.replace(html, '$LATITUDE$', xpath.evaluate('gpsY/text()'))"/>
-		<CMD cmd="html = string.replace(html, '$PLACE$', xpath.evaluate('place/text()'))"/>
-		<CMD cmd="html = string.replace(html, '$ADDRESS$', xpath.evaluateEx(xml, '//placeAddr/text()'))"/>
-		<CMD cmd="detailMapView.src = html" />
-
-		<CMD cmd="detailView.visible = true" />
-	</FUNCTION>
-
-	<FUNCTION id="showDetail(idName)">
-		<CMD condition="idName == 'detailOverview'" cmd="detailOverview.visible=true" elseCmd="detailOverview.visible=false"/>
-		<CMD condition="idName == 'detailContent'" cmd="detailContent.visible=true" elseCmd="detailContent.visible=false"/>
-		<CMD condition="idName == 'detailMapView'" cmd="detailMapView.visible=true" elseCmd="detailMapView.visible=false"/>
+		<CMD cmd="url = 'http://m.shopping.naver.com/search/all_search.nhn?query='+string.encode(search.text, 'percent')+'&amp;frm=NVSHSRC&amp;cat_id=&amp;sb=true'"/>
+		<CMD cmd="searchResult.src = url"/>
+		<CMD cmd="device.log(url)"/> 
 	</FUNCTION>
 </MOML>
 
