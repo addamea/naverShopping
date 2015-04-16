@@ -51,7 +51,7 @@ function modifyHref()
     var as =sc[i].getElementsByTagName("a");
     alert("test3 "+as.length);
      for(var k=0; k < as.length; ++k){
-      var a = as[i];
+      var a = as[k];
       //alert(a.href);
        if(a.href == "#"){
         a.setAttribute("oldHref", a.href);
