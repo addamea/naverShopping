@@ -48,7 +48,8 @@ function modifyHref()
   alert("test2 "+sc.length);
   
   for (var i=0; i < sc.length; ++i) {
-    var as =sc.getElementsByTagName("a");
+    var as =sc[i].getElementsByTagName("a");
+    alert("test3 "+as.length);
      for(var k=0; k < as.length; ++k){
       var a = as[i];
       alert(a.href);
