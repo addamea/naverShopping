@@ -10,7 +10,6 @@
 			<AGATEWEBVIEW layout="320,430" id="searchResult" controls="false">
 				<LINKMAP>
 	                <LINK url="*" delay="500" jsPlugin="modifyPage.js"/>
-	                <LINK url="*" jsPlugin="modifyHref.js"/>
 					<!-- <LINK url="*" onFinish="function.updateToolbar"/> -->
 				</LINKMAP>
 			</AGATEWEBVIEW>
