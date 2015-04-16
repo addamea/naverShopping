@@ -52,8 +52,8 @@ function modifyHref()
     alert("test3 "+as.length);
      for(var k=0; k < as.length; ++k){
       var a = as[i];
-      alert(a.href);
-       if(a.href.indexOf("#") != 0){
+      //alert(a.href);
+       if(a.href == "#"){
         a.setAttribute("oldHref", a.href);
         var script = "device.toastPopup('sss')";
         a.setAttribute("href", "javascript:agate.runAction(\""+script+"\"),undefined");
