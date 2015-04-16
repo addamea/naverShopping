@@ -42,10 +42,12 @@ function changeMarginTopById(id, value) {
 function modifyHref()
 {
   var sc = document.getElementsByClassName("list_btn");
+  alert("test1");
   if (sc.length == 0)
     return;
+  alert("test2");
   
-  for (var i=0; i < lis.length; ++i) {
+  for (var i=0; i < sc.length; ++i) {
     var li = lis[i];
     var as =li.getElementsByTagName("a");
     // for(var k=0; k < as.length; ++k){
