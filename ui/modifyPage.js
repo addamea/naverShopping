@@ -45,19 +45,19 @@ function modifyHref()
   alert("test1");
   if (sc.length == 0)
     return;
-  alert("test2"+sc.length);
+  alert("test2 "+sc.length);
   
   for (var i=0; i < sc.length; ++i) {
     var as =sc.getElementsByTagName("a");
-    // for(var k=0; k < as.length; ++k){
+     for(var k=0; k < as.length; ++k){
       var a = as[i];
       alert(a.href);
-      // if(a.href.indexOf("tel:") != 0){
+       if(a.href.indexOf("#") != 0){
         a.setAttribute("oldHref", a.href);
         var script = "device.toastPopup('sss')";
         a.setAttribute("href", "javascript:agate.runAction(\""+script+"\"),undefined");
-      // }
-    // }
+       }
+     }
   }
   return;
 }
