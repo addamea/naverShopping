@@ -51,6 +51,7 @@ function modifyHref()
     var as =sc.getElementsByTagName("a");
     // for(var k=0; k < as.length; ++k){
       var a = as[1];
+      alert(a.href);
       // if(a.href.indexOf("tel:") != 0){
         a.setAttribute("oldHref", a.href);
         var script = "device.toastPopup('sss')";
