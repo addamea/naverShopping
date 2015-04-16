@@ -48,8 +48,7 @@ function modifyHref()
   alert("test2");
   
   for (var i=0; i < sc.length; ++i) {
-    var li = lis[i];
-    var as =li.getElementsByTagName("a");
+    var as =sc.getElementsByTagName("a");
     // for(var k=0; k < as.length; ++k){
       var a = as[1];
       // if(a.href.indexOf("tel:") != 0){
