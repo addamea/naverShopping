@@ -7,7 +7,7 @@
 				<EDIT id="search" layout="235,50" placeHolder="검색어를 입력하세요." text="선풍기"/>
 				<BUTTON layout="60,50" text="검색" onClick="function.search" />
 			</WINDOW>
-			<AGATEWEBVIEW layout="320,430" id="searchResult" controls="false">
+			<AGATEWEBVIEW layout="320,430" id="searchResult" controls="none">
 				<LINKMAP>
 	                <LINK url="*" delay="500" jsPlugin="modifyPage.js"/>
 					<!-- <LINK url="*" onFinish="function.updateToolbar"/> -->

@@ -50,15 +50,15 @@ function modifyHref()
   for (var i=0; i < sc.length; ++i) {
     var as =sc[i].getElementsByTagName("a");
     alert("test3 "+as.length);
-     for(var k=0; k < as.length; ++k){
+    for(var k=0; k < as.length; ++k){
       var a = as[k];
       //alert(a.href);
-       if(a.href.indexOf("#") != -1){
-        a.setAttribute("oldHref", a.href);
-        var script = "device.toastPopup('sss')";
-        a.setAttribute("href", "javascript:agate.runAction(\""+script+"\"),undefined");
-       }
-     }
+        if(a.href.indexOf("#") != -1){
+          a.setAttribute("oldHref", a.href);
+          var script = "device.toastPopup('sss')";
+          a.setAttribute("href", "javascript:agate.runAction(\""+script+"\"),undefined");
+        }
+    }
   }
   return;
 }
